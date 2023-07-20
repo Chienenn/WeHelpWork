@@ -27,6 +27,8 @@ for area in station_dict:
     attractions = ",".join(station_dict[area])
     mrt_data.append([area, attractions])
 
+print(mrt_data)
+
 attraction_data = []
 for item in data["result"]["results"]:
     name = item["stitle"]
@@ -42,7 +44,7 @@ for item in data["result"]["results"]:
     attraction_data.append([name, address, longitude, latitude, first_url])
 
 with open("mrt.csv", mode="w", encoding="utf-8", newline="") as mrt_file:
-    mrt_writer = csv.writer(mrt_file)
+    mrt_writer = csv.writer(mrt_file, quoting=csv.QUOTE_NONE, escapechar=" ")
     mrt_writer.writerow(["捷運站", "景點"])
     mrt_writer.writerows(mrt_data)
 
