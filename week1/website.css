@@ -91,7 +91,7 @@
 }
 
 .box-text {
-  display: inline-block; /* 将文本显示为内联块元素 */
+  display: inline-block; 
   vertical-align: middle;
 }
 .pic-txt {
