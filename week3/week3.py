@@ -44,9 +44,10 @@ for item in data["result"]["results"]:
     attraction_data.append([name, address, longitude, latitude, first_url])
 
 with open("mrt.csv", mode="w", encoding="utf-8", newline="") as mrt_file:
-    mrt_writer = csv.writer(mrt_file, quoting=csv.QUOTE_NONE, escapechar=" ")
+    mrt_writer = csv.writer(mrt_file)
     mrt_writer.writerow(["捷運站", "景點"])
-    mrt_writer.writerows(mrt_data)
+    for area, attractions in mrt_data:
+        mrt_writer.writerow([area, attractions])
 
 
 with open("attraction.csv", mode="w", encoding="utf-8", newline="") as attraction_file:

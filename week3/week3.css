@@ -181,6 +181,10 @@
   overflow: auto;
 }
 
+.load-more {
+  display: fle;
+}
+
 a {
   color: black;
 }
