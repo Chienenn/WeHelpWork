@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Squared Number Page</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-image: linear-gradient(
+          -267deg,
+          #f3e7e9 0%,
+          #d4e3f9 99%,
+          #e3eeff 100%
+        );
+        margin: 0;
+        padding: 0;
+      }
+
+      h1 {
+        text-align: center;
+        margin-top: 50px;
+      }
+
+      .container {
+        max-width: 400px;
+        margin: 30px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      p {
+        margin-bottom: 20px;
+        margin-left: 20px;
+      }
+
+      a {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        color: #9cb8e3;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>正整數計算結果</h1>
+      <p>
+        您輸入的數字：{{ number }}， 正整數的平方計算結果：{{ squared_number|int
+        }}
+      </p>
+      <a href="{{ url_for('home') }}">回到首頁</a>
+    </div>
+  </body>
+</html>

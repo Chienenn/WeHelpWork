@@ -51,7 +51,7 @@ def j_attractions(attractions):
 
 
 with open("mrt.csv", mode="w", encoding="utf-8", newline="") as mrt_file:
-    mrt_writer = csv.writer(mrt_file, csv.QUOTE_NONE, escapechar="")
+    mrt_writer = csv.writer(mrt_file)  # , csv.QUOTE_NONE, escapechar="")
     mrt_writer.writerow(["捷運站", "景點名稱"])
     for area, attractions in mrt_data:
         attractions_str = j_attractions(attractions)
