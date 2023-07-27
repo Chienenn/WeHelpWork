@@ -27,34 +27,28 @@ def home():
 
 @app.route("/signin", methods=["POST"])
 def verification_Endpoint():
-    if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("password")
-        checkbox = request.form.get("checkbox")
+    username = request.form.get("username")
+    password = request.form.get("password")
+    checkbox = request.form.get("checkbox")
 
-        if checkbox == "on" and (not username or not password):
-            error_message = "未輸入帳號或密碼"
-            return redirect(url_for("error_page", message=error_message))
+    if checkbox == "on" and (not username or not password):
+        error_message = "未輸入帳號或密碼"
+        return redirect(url_for("error_page", message=error_message))
 
-        elif (
-            username != USER_DATA["username"] or password != USER_DATA["password"]
-        ) and checkbox == "on":
-            error_message = "帳號或密碼輸入錯誤"
-            return redirect(url_for("error_page", message=error_message))
+    elif (
+        username != USER_DATA["username"] or password != USER_DATA["password"]
+    ) and checkbox == "on":
+        error_message = "帳號或密碼輸入錯誤"
+        return redirect(url_for("error_page", message=error_message))
 
-        elif (
-            username == USER_DATA["username"]
-            and password == USER_DATA["password"]
-            and checkbox == "on"
-        ):
-            session["signed_in"] = True
-            session.modified = True
-            return redirect(url_for("success_page"))
-
-    if session.get("signed_in"):
+    elif (
+        username == USER_DATA["username"]
+        and password == USER_DATA["password"]
+        and checkbox == "on"
+    ):
+        session["signed_in"] = True
+        session.modified = True
         return redirect(url_for("success_page"))
-    else:
-        return render_template("week4-2.html")
 
 
 @app.route("/member")
