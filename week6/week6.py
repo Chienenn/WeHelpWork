@@ -54,12 +54,14 @@ def signin():
     conn = mysql.connector.connect(**db_config)
     cursor = conn.cursor()
 
-    query = "SELECT * FROM member WHERE username = %s AND password = %s"
+    query = "SELECT id FROM member WHERE username = %s AND password = %s"
     cursor.execute(query, (username, password))
     user = cursor.fetchone()
 
     if user:
         session["username"] = username
+        session["user_id"] = user[0]
+
         cursor.close()
         conn.close()
         return redirect(url_for("member"))
@@ -107,26 +109,23 @@ def create_message():
     if "username" not in session:
         return redirect(url_for("home"))
 
-    username = session["username"]
+    user_id = session.get("user_id")
 
-    conn = mysql.connector.connect(**db_config)
-    cursor = conn.cursor()
+    if user_id is None:
+        return redirect(url_for("home"))
 
-    query = "SELECT id FROM member WHERE username = %s"
-    cursor.execute(query, (username,))
-    user = cursor.fetchone()
+    message_content = request.form.get("message")
 
-    if user:
-        user_id = user[0]
-        message_content = request.form.get("message")
+    if message_content:
+        conn = mysql.connector.connect(**db_config)
+        cursor = conn.cursor()
 
-        if message_content:
-            message_query = "INSERT INTO message (member_id, content) VALUES (%s, %s)"
-            cursor.execute(message_query, (user_id, message_content))
-            conn.commit()
+        message_query = "INSERT INTO message (member_id, content) VALUES (%s, %s)"
+        cursor.execute(message_query, (user_id, message_content))
+        conn.commit()
 
-    cursor.close()
-    conn.close()
+        cursor.close()
+        conn.close()
 
     return redirect(url_for("member"))
 
