@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>member page</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-image: linear-gradient(
+          -267deg,
+          #dad4ec 0%,
+          #dad4ec 1%,
+          #f3e7e9 100%
+        );
+        margin: 0;
+        padding: 0;
+      }
+
+      h1 {
+        text-align: center;
+        margin-top: 50px;
+      }
+      h2 {
+        text-align: center;
+        margin-top: 40px;
+      }
+
+      .container {
+        max-width: 400px;
+        margin: 30px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      textarea {
+        margin-left: 72px;
+      }
+      button {
+        margin-left: 180px;
+      }
+      p {
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      a {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        color: #b19bda;
+        text-decoration: none;
+      }
+
+      ul {
+        padding-left: 0;
+        margin-top: 20px;
+      }
+
+      li {
+        list-style: none;
+        margin-bottom: 5px;
+        padding: 5px;
+        margin-left: 50px;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>會員頁面</h1>
+      <p>{{ user_name }}，您已成功登入系統</p>
+      <a href="{{ url_for('signout') }}">登出系統</a>
+      <form method="post" action="/createMessage">
+        <br />
+        <br />
+        <hr />
+        <h2>留言</h2>
+        <textarea
+          name="message"
+          rows="4"
+          cols="30"
+          placeholder="輸入留言內容"
+        ></textarea>
+        <br />
+        <br />
+        <button class="btn" type="submit">送出</button>
+      </form>
+      <br />
+      <br />
+      <hr />
+      <h2>會員留言訊息</h2>
+      <ul>
+        {% for message in messages %}
+        <li>
+          {{ message[1] }}：{{ message[2] }} {% if message[1] == user_name %}
+          <input type="hidden" id="user_id" value="{{ user_id }}" />
+          <button
+            class="delete-button"
+            data-message-id="{{ message[0] }}"
+            data-user-id="{{ user_id }}"
+          >
+            X</button
+          >{% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const deleteButtons = document.querySelectorAll(".delete-button");
+
+        deleteButtons.forEach((button) => {
+          const userId = button.dataset.userId;
+          button.addEventListener("click", function () {
+            const messageId = button.dataset.messageId;
+            confirmDelete(messageId, userId);
+          });
+        });
+      });
+
+      function confirmDelete(messageId) {
+        console.log("Deleting message with ID:", messageId);
+        const confirmResult = confirm("確定要刪除留言嗎？");
+
+        if (confirmResult) {
+          fetch(`/deleteMessage?message_id=${messageId}`, {
+            method: "POST",
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.success) {
+                location.reload();
+              } else {
+                alert("刪除操作失敗，請稍後再試。");
+              }
+            });
+        }
+      }
+    </script>
+  </body>
+</html>
