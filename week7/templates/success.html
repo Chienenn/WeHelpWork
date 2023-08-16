@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>member page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/member.css') }}">
+</head>
+  </head>
+  <body>
+    <div class="container">
+      <h1>會員頁面</h1>
+      <p id="renew_name">{{ user_name }}，您已成功登入系統</p>
+      <a href="{{ url_for('signout') }}">登出系統</a>
+      <form method="post" action="/createMessage">
+        <br />
+        <br />
+        <hr />
+        <h2>留言</h2>
+        <textarea
+          name="message"
+          rows="4"
+          cols="30"
+          placeholder="輸入留言內容"
+        ></textarea>
+        <br />
+        <br />
+        <button class="btn" type="submit">送出</button>
+      </form>
+      <br />
+      <br />
+      <hr />
+      <h2>會員留言訊息</h2>
+      <ul>
+        {% for message in messages %}
+        <li>
+          {{ message[1] }}：{{ message[2] }} {% if message[1] == user_name %}
+          <input type="hidden" id="user_id" value="{{ user_id }}" />
+          <button
+            class="delete-button"
+            data-message-id="{{ message[0] }}"
+            data-user-id="{{ user_id }}"
+          >
+            X</button
+          >{% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      <hr />
+      <h2>查詢會員姓名</h2>
+      <div class="query">
+        <input
+          type="text"
+          id="query-username"
+          style="width: 200px; height: 30px"
+          placeholder="輸入會員帳號"
+        />
+        <button id="query-button" style="width: 50px; height: 30px">
+          查詢
+        </button>
+      </div>
+      <div id="result"></div>
+      <hr />
+      <div>
+        <h2>修改姓名</h2>
+        <div class="text">
+          <input
+            type="text"
+            id="new-name"
+            style="width: 200px; height: 30px"
+            placeholder="輸入新的姓名"
+          />
+          <button id="update-name-button" style="width: 50px; height: 30px">
+            更新
+          </button>
+        </div>
+        <div id="update-name-result"></div>
+      </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/member.js') }}"></script>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>week4-02</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home_page.css') }}">
+</head>
+    
+
+  <body>
+    <h1>註冊帳號</h1>
+    <form method="post" action="/signup" id="signup">
+      <label for="name">姓名：</label>
+      <input type="text" id="name" name="name" />
+      <br />
+      <label for="username">帳號：</label>
+      <input type="text" id="username" name="username" />
+      <br />
+      <label for="password">密碼：</label>
+      <input type="password" id="password" name="password" />
+      <br />
+      <button type="submit" ">註冊</button>
+    </form>
+    <h1>登入系統</h1>
+    <form method="post" action="signin" id="login">
+      <label for="signname">帳號：</label>
+      <input type="text" id="signname" name="signname" />
+      <br />
+      <label for="signpassword">密碼：</label>
+      <input type="password" id="signpassword" name="signpassword" />
+      <br />
+      <button type="submit">登入</button>
+    </form>
+
+    <script src="{{ url_for('static', filename='js/home_page.js') }}"></script>
+  </body>
+</html>
