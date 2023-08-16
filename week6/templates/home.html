@@ -4,61 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>week4-02</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home_page.css') }}">
 </head>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-image: linear-gradient(-267deg, #fff1eb 0%, #bee6f9 100%);
-        background-size: cover;
-        margin: 0;
-        padding: 0;
-      }
+    
 
-      h1 {
-        text-align: center;
-        margin-top: 50px;
-      }
-
-      form {
-        max-width: 400px;
-        margin: 30px auto;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      }
-
-      label {
-        display: block;
-        margin-bottom: 5px;
-      }
-
-      input {
-        width: 90%;
-        padding: 10px;
-        margin-bottom: 20px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-      }
-
-      button {
-        display: block;
-        width: 96%;
-        padding: 10px;
-        background-color: #92dafc;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        font-size: 18px;
-      }
-
-      button:hover {
-        background-color: #bce6fa;
-      }
-    </style>
-  </head>
   <body>
     <h1>註冊帳號</h1>
     <form method="post" action="/signup" id="signup">
@@ -84,33 +33,6 @@
       <button type="submit">登入</button>
     </form>
 
-    <script>
-      const signup = document.getElementById("signup");
-      signup.addEventListener("submit", function (event) {
-        const name = document.getElementById("name");
-        const username = document.getElementById("username");
-        const password = document.getElementById("password");
-
-        if (!name.value || !username.value || !password.value) {
-          event.preventDefault();
-          alert("請輸入完整資訊");
-        }
-    
-      });
-
-      const loginForm = document.getElementById("login");
-
-      loginForm.addEventListener("submit", function (event) {
-        const usernameInput = document.getElementById("signname");
-        const passwordInput = document.getElementById("signpassword");
-
-        if (!usernameInput.value || !passwordInput.value) {
-          event.preventDefault();
-          alert("請輸入帳號或密碼");
-        }
-      });
-      
-   
-    </script>
+    <script src="{{ url_for('static', filename='js/home_page.js') }}"></script>
   </body>
 </html>

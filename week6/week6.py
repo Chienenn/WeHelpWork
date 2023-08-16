@@ -156,6 +156,48 @@ def delete_message():
         return jsonify({"success": False, "error": "Message not found"})
 
 
+@app.route("/api/member", methods=["GET"])
+def get_member():
+    username = request.args.get("username")
+
+    conn = mysql.connector.connect(**db_config)
+    cursor = conn.cursor(dictionary=True)
+
+    query = "SELECT id, name, username FROM member WHERE username = %s"
+    cursor.execute(query, (username,))
+    user = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    response_data = {"data": user}
+    return jsonify(response_data)
+
+
+@app.route("/api/member", methods=["PATCH"])
+def api_update_member_name():
+    if "username" not in session:
+        return jsonify({"error": True})
+
+    new_name = request.json.get("name")
+    if not new_name:
+        return jsonify({"error": True})
+
+    conn = mysql.connector.connect(**db_config)
+    cursor = conn.cursor()
+
+    username = session["username"]
+
+    update_query = "UPDATE member SET name = %s WHERE username = %s"
+    cursor.execute(update_query, (new_name, username))
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+    return jsonify({"ok": True})
+
+
 @app.route("/error")
 def error_page():
     error_message = request.args.get("message")
